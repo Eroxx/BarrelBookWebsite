@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barrel Book — The Spirits Tasting Journal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ember: {
+              50:  '#FDF6E8',
+              100: '#F8E9C6',
+              200: '#F0CD88',
+              300: '#E8A830',
+              400: '#C87820',
+              500: '#A05A10',
+              600: '#7A3E08',
+              700: '#5C2C04',
+              800: '#3D1A04',
+              900: '#1E0D02',
+            },
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            body:    ['"Crimson Pro"', 'Georgia', 'serif'],
+          },
+          letterSpacing: {
+            'widest2': '0.25em',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg-base:    #08050200;
+      --bg-deep:    #080604;
+      --bg-surface: #100C08;
+      --bg-raised:  #1A1208;
+      --oak:        #3D1F0A;
+      --dram:       #C87820;
+      --gold:       #E8A830;
+      --cream:      #F0DEB8;
+      --smoke:      #C8B89A;
+      --text-faint: #6B5840;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--cream);
+      font-family: 'Crimson Pro', Georgia, serif;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ─── SVG noise filter ─────────────────── */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ─── Glow blobs ─────────────────────── */
+    .glow-amber {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200, 120, 32, 0.28) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .glow-gold {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232, 168, 48, 0.14) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ─── Animations ─────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(7px); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    .animate-fade-up { animation: fadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .animate-fade-in { animation: fadeIn 1s ease both; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-800 { animation-delay: 0.8s; }
+    .delay-1000 { animation-delay: 1s; }
+
+    /* ─── Nav ────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(8, 6, 4, 0.75);
+      border-bottom: 1px solid rgba(200, 120, 32, 0.12);
+    }
+
+    /* ─── Buttons ────────────────────────── */
+    .btn-primary {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: linear-gradient(135deg, #C87820 0%, #E8A830 50%, #C87820 100%);
+      background-size: 200% auto;
+      color: #08050A;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background-position 0.4s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 20px rgba(200, 120, 32, 0.35), 0 0 0 1px rgba(232, 168, 48, 0.2);
+    }
+    .btn-primary:hover {
+      background-position: right center;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 30px rgba(200, 120, 32, 0.55), 0 0 0 1px rgba(232, 168, 48, 0.4);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid rgba(200, 120, 32, 0.4);
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(200, 120, 32, 0.85);
+      background: rgba(200, 120, 32, 0.08);
+      color: var(--gold);
+    }
+
+    .btn-nav {
+      display: inline-block;
+      padding: 0.45rem 1.2rem;
+      background: rgba(200, 120, 32, 0.9);
+      color: #06040200;
+      color: #100C08;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+    .btn-nav:hover { background: #E8A830; transform: translateY(-1px); }
+    .btn-nav.discord:hover { background: rgba(88,101,242,1) !important; }
+
+    /* ─── Feature cards ──────────────────── */
+    .feature-card {
+      background: linear-gradient(145deg, rgba(30, 18, 8, 0.9) 0%, rgba(20, 12, 6, 0.95) 100%);
+      border: 1px solid rgba(200, 120, 32, 0.15);
+      border-radius: 4px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 120, 32, 0.5), transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .feature-card:hover {
+      border-color: rgba(200, 120, 32, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(200, 120, 32, 0.08);
+    }
+    .feature-card:hover::before { opacity: 1; }
+
+    /* ─── Journal card ───────────────────── */
+    .journal-card {
+      background: linear-gradient(145deg, #1A1008 0%, #120B05 100%);
+      border: 1px solid rgba(200, 120, 32, 0.2);
+      border-radius: 4px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.8),
+        inset 0 1px 0 rgba(232, 168, 48, 0.08);
+    }
+
+    .rating-pip {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(200, 120, 32, 0.5);
+      background: transparent;
+      display: inline-block;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .rating-pip.filled {
+      background: #C87820;
+      border-color: #E8A830;
+      box-shadow: 0 0 6px rgba(200, 120, 32, 0.7);
+    }
+
+    .note-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dram);
+      font-weight: 600;
+    }
+
+    /* ─── Divider ─────────────────────────── */
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: rgba(200, 120, 32, 0.35);
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200, 120, 32, 0.3), transparent);
+    }
+
+    /* ─── Stats ──────────────────────────── */
+    .stat-item {
+      text-align: center;
+      padding: 0 2rem;
+      border-right: 1px solid rgba(200, 120, 32, 0.18);
+    }
+    .stat-item:last-child { border-right: none; }
+
+    /* ─── Testimonial card ───────────────── */
+    .testimonial-card {
+      background: linear-gradient(145deg, rgba(26, 18, 8, 0.8) 0%, rgba(16, 10, 4, 0.9) 100%);
+      border: 1px solid rgba(200, 120, 32, 0.12);
+      border-radius: 4px;
+      padding: 2rem;
+      position: relative;
+    }
+    .testimonial-card::after {
+      content: '\201C';
+      position: absolute;
+      top: -0.5rem; left: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      color: rgba(200, 120, 32, 0.15);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* ─── Footer ─────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(200, 120, 32, 0.12);
+      background: #060402;
+    }
+
+    /* ─── Scroll indicator ───────────────── */
+    .scroll-indicator {
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    /* ─── Wood grain section divider ─────── */
+    .wood-line {
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(200, 120, 32, 0.06) 15%,
+        rgba(200, 120, 32, 0.25) 35%,
+        rgba(232, 168, 48, 0.4) 50%,
+        rgba(200, 120, 32, 0.25) 65%,
+        rgba(200, 120, 32, 0.06) 85%,
+        transparent 100%
+      );
+    }
+
+    /* ─── Nav links ──────────────────────── */
+    .nav-link {
+      color: var(--smoke);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1px;
+      background: var(--dram);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+    .nav-link:hover { color: var(--gold); }
+    .nav-link:hover::after { transform: scaleX(1); }
+
+    /* ─── Color swatch for tasting notes ── */
+    .color-swatch {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #F0C060, #8B4010);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,220,100,0.4);
+    }
+
+    /* ─── Section headings ───────────────── */
+    .section-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dram);
+      font-weight: 600;
+    }
+
+    /* ─── Store badge buttons ─────────────── */
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(26, 18, 8, 0.9);
+      border: 1px solid rgba(200, 120, 32, 0.3);
+      border-radius: 4px;
+      color: var(--cream);
+      text-decoration: none;
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.2s ease;
+    }
+    .store-badge:hover {
+      border-color: rgba(200, 120, 32, 0.7);
+      background: rgba(40, 26, 10, 0.95);
+      transform: translateY(-2px);
+    }
+
+    /* Mobile nav hide */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(200, 120, 32, 0.15); padding: 1.5rem 0; }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Noise overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ─── NAVIGATION ─────────────────────────────── -->
+  <nav>
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3" style="text-decoration:none;">
+        <img src="brand_assets/barrelbook.png" alt="Barrel Book" class="w-9 h-9 object-contain" />
+        <span style="
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 1.15rem;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          color: var(--cream);
+          text-transform: uppercase;
+          line-height: 1;
+        ">Barrel Book</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <a href="https://discord.gg/nfgGYnGWfA" target="_blank" rel="noopener" class="btn-nav" style="display:flex;align-items:center;gap:0.45rem;background:rgba(88,101,242,0.85);">
+          <svg width="16" height="12" viewBox="0 0 24 18" fill="none" style="flex-shrink:0;">
+            <path d="M20.317 1.492A19.825 19.825 0 0 0 15.885.068a.074.074 0 0 0-.079.037c-.34.607-.719 1.396-.984 2.018a18.3 18.3 0 0 0-5.646 0 13.365 13.365 0 0 0-.999-2.018.077.077 0 0 0-.079-.037A19.77 19.77 0 0 0 3.677 1.492a.07.07 0 0 0-.032.027C.533 6.093-.32 10.555.099 14.961a.08.08 0 0 0 .031.055 19.9 19.9 0 0 0 5.993 3.029.077.077 0 0 0 .084-.026 14.09 14.09 0 0 0 1.226-1.994.071.071 0 0 0-.041-.099 13.1 13.1 0 0 1-1.872-.892.073.073 0 0 1-.007-.12c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.1.246.198.373.292a.073.073 0 0 1-.006.12 12.3 12.3 0 0 1-1.873.892.072.072 0 0 0-.041.1c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.442a.061.061 0 0 0-.031-.028zM8.02 12.278c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.956 2.419-2.157 2.419zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.946 2.419-2.157 2.419z" fill="white"/>
+          </svg>
+          Join Discord
+        </a>
+        <a href="mailto:barrelbookdev@gmail.com" class="btn-nav" style="background:transparent;border:1px solid rgba(200,120,32,0.4);color:var(--smoke);">Contact Developer</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ─── HERO ───────────────────────────────────── -->
+  <section style="
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 1.5rem 6rem;
+    overflow: hidden;
+    background: var(--bg-deep);
+  ">
+    <!-- Amber glow blobs -->
+    <div class="glow-amber" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-58%);animation:glowPulse 5s ease-in-out infinite;"></div>
+    <div class="glow-gold"  style="width:400px;height:400px;top:55%;left:60%;transform:translate(-50%,-50%);animation:glowPulse 7s ease-in-out infinite 1s;"></div>
+    <div class="glow-gold"  style="width:300px;height:300px;top:40%;left:35%;transform:translate(-50%,-50%);animation:glowPulse 6s ease-in-out infinite 2s;"></div>
+
+    <!-- Subtle vignette -->
+    <div style="
+      position:absolute;inset:0;pointer-events:none;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(6,4,2,0.85) 100%);
+    "></div>
+
+    <!-- Content -->
+    <div style="position:relative;z-index:2;text-align:center;max-width:800px;">
+      <!-- Logo -->
+      <div class="animate-fade-in delay-100" style="margin-bottom:1.75rem;">
+        <img src="brand_assets/barrelbook.png" alt="Barrel Book" style="
+          width: 200px; height: 200px;
+          object-fit: contain;
+          filter: drop-shadow(0 0 50px rgba(200, 120, 32, 0.65)) drop-shadow(0 0 20px rgba(200, 120, 32, 0.4));
+          margin: 0 auto;
+        " />
+      </div>
+
+      <!-- Brand name -->
+      <h1 class="animate-fade-up delay-200" style="
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.75rem, 7vw, 5.5rem);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--cream);
+        line-height: 1;
+        margin-bottom: 0.6rem;
+      ">BarrelBook</h1>
+
+      <!-- Eyebrow label -->
+      <p class="section-label animate-fade-up delay-300" style="margin-bottom:2rem;">
+        The Spirits Tasting Journal
+      </p>
+
+      <!-- Tagline -->
+      <h2 class="animate-fade-up delay-400" style="
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.25rem, 5.5vw, 4.75rem);
+        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--cream);
+        max-width: 720px;
+        margin: 0 auto 2.75rem;
+      ">
+        For Those who Like Their Whiskey Neat,<br />
+        <em style="font-style:italic;color:var(--gold);">and Their Data Even Neater.</em>
+      </h2>
+
+      <!-- CTAs removed -->
+
+      <!-- Scroll indicator -->
+      <div class="animate-fade-in delay-1000 scroll-indicator" style="margin-top:5rem;">
+        <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto;opacity:0.4;">
+          <rect x="1" y="1" width="18" height="28" rx="9" stroke="#C87820" stroke-width="1.5"/>
+          <rect x="9" y="6" width="2" height="6" rx="1" fill="#C87820"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Bottom wood line -->
+    <div class="wood-line" style="position:absolute;bottom:0;left:0;right:0;"></div>
+  </section>
+
+
+  <!-- ─── FEATURES ───────────────────────────────── -->
+  <section id="features" style="padding:7rem 1.5rem;position:relative;background:var(--bg-deep);">
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at 30% 50%, rgba(200,120,32,0.05) 0%, transparent 60%);
+    "></div>
+
+    <div class="max-w-6xl mx-auto" style="position:relative;z-index:1;">
+      <!-- Section header -->
+      <div style="text-align:center;margin-bottom:4rem;">
+        <p class="section-label" style="margin-bottom:0.75rem;">Crafted for Whiskey Lovers</p>
+        <h2 style="
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(2rem, 4vw, 3.25rem);
+          font-weight: 400;
+          letter-spacing: -0.01em;
+          color: var(--cream);
+          line-height: 1.15;
+        ">
+          An app worthy of<br />your finest pours.
+        </h2>
+      </div>
+
+      <!-- Feature grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div style="
+            width:52px;height:52px;
+            background:rgba(200,120,32,0.12);
+            border:1px solid rgba(200,120,32,0.25);
+            border-radius:3px;
+            display:flex;align-items:center;justify-content:center;
+            margin-bottom:1.5rem;
+          ">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <rect x="3" y="4" width="20" height="18" rx="2" stroke="#C87820" stroke-width="1.4"/>
+              <path d="M8 4V3M18 4V3" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M7 12h5M7 16h8M7 8h12" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 style="
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.5rem;font-weight:600;
+            color:var(--cream);margin-bottom:0.75rem;
+          ">Catalog Every Bottle</h3>
+          <p style="color:var(--smoke);line-height:1.7;font-size:1.05rem;font-weight:300;">
+            Track owned, open, and finished bottles alongside your wishlist. Log proof, age, distillery, price, and special designations — Bottled-in-Bond, Single Barrel, Cask Strength, and more.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div style="
+            width:52px;height:52px;
+            background:rgba(200,120,32,0.12);
+            border:1px solid rgba(200,120,32,0.25);
+            border-radius:3px;
+            display:flex;align-items:center;justify-content:center;
+            margin-bottom:1.5rem;
+          ">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <circle cx="13" cy="13" r="9" stroke="#C87820" stroke-width="1.4"/>
+              <circle cx="13" cy="13" r="5" stroke="#C87820" stroke-width="1.4"/>
+              <circle cx="13" cy="13" r="1.5" fill="#C87820"/>
+              <path d="M13 4v2M13 20v2M4 13H6M20 13h2M6.34 6.34l1.42 1.42M18.24 18.24l1.42 1.42M6.34 19.66l1.42-1.42M18.24 7.76l1.42-1.42" stroke="#C87820" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 style="
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.5rem;font-weight:600;
+            color:var(--cream);margin-bottom:0.75rem;
+          ">Taste with Precision</h3>
+          <p style="color:var(--smoke);line-height:1.7;font-size:1.05rem;font-weight:300;">
+            Log nose, palate, and finish separately with an interactive flavor wheel — 40+ descriptors across 8 categories. Rate every pour on a 1–10 scale and note your serving method.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div style="
+            width:52px;height:52px;
+            background:rgba(200,120,32,0.12);
+            border:1px solid rgba(200,120,32,0.25);
+            border-radius:3px;
+            display:flex;align-items:center;justify-content:center;
+            margin-bottom:1.5rem;
+          ">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M4 20V14M9 20V10M14 20V6M19 20V12" stroke="#C87820" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 14l5-4 5-4 5 2" stroke="#C87820" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 style="
+            font-family:'Cormorant Garamond',serif;
+            font-size:1.5rem;font-weight:600;
+            color:var(--cream);margin-bottom:0.75rem;
+          ">Know Your Collection</h3>
+          <p style="color:var(--smoke);line-height:1.7;font-size:1.05rem;font-weight:300;">
+            See your collection's total value, type composition, proof distribution, and top distilleries at a glance. Track which bottles you've tasted and which are still sealed.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Notable Features -->
+      <div style="margin-top:1.5rem;">
+        <div style="
+          background:linear-gradient(145deg,rgba(20,12,6,0.6) 0%,rgba(14,8,4,0.7) 100%);
+          border:1px solid rgba(200,120,32,0.2);
+          border-radius:4px;
+          padding:2rem 2.5rem;
+          position:relative;
+          overflow:hidden;
+        ">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,168,48,0.4),transparent);"></div>
+
+          <p class="note-label" style="margin-bottom:1.5rem;">Notable Features</p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;">
+
+            <!-- Infinity Bottle -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3s-2 2-2 5v7a2 2 0 004 0V8c0-3-2-5-2-5z" stroke="#C87820" stroke-width="1.4" stroke-linejoin="round"/>
+                  <path d="M9 9H6a2.5 2.5 0 000 5h3M15 9h3a2.5 2.5 0 010 5h-3" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Infinity Bottle</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Blend multiple whiskeys, auto-calculate the combined proof, and log tastings as your blend evolves.</p>
+              </div>
+            </div>
+
+            <!-- CSV Import/Export -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#C87820" stroke-width="1.4" stroke-linejoin="round"/>
+                  <path d="M14 2v6h6M8 13h8M8 17h5" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">CSV Import & Export</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Bring your existing spreadsheet in or export your full collection anytime — your data, your format.</p>
+              </div>
+            </div>
+
+            <!-- Wishlist + Store Tracking -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="#C87820" stroke-width="1.4" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Wishlist & Store Tracking</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Track bottles you want with priority, rarity, and the stores where they're available near you.</p>
+              </div>
+            </div>
+
+            <!-- iCloud Sync -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" stroke="#C87820" stroke-width="1.4" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">iCloud Sync</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Your collection backs up automatically and stays in sync across all your Apple devices.</p>
+              </div>
+            </div>
+
+            <!-- Smart Search -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <circle cx="11" cy="11" r="7" stroke="#C87820" stroke-width="1.4"/>
+                  <path d="M21 21l-4.35-4.35" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Smart Search</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Search by name, type, proof, distillery, or age — with natural language queries like "type: bourbon proof: 100".</p>
+              </div>
+            </div>
+
+            <!-- Replacement Tracking -->
+            <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+              <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M1 4v6h6" stroke="#C87820" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" stroke="#C87820" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Replacement Tracking</p>
+                <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Finish a bottle? Mark it for replacement and track exactly what you're hunting down next.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="wood-line" style="margin-top:6rem;"></div>
+  </section>
+
+
+  <!-- ─── JOURNAL PREVIEW ─────────────────────────── -->
+  <section id="journal" style="padding:7rem 1.5rem;background:var(--bg-surface);position:relative;">
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at 70% 50%, rgba(200,120,32,0.06) 0%, transparent 60%);
+    "></div>
+
+    <div class="max-w-3xl mx-auto" style="
+      position:relative;z-index:1;
+    ">
+      <!-- Left: copy -->
+      <div>
+        <p class="section-label" style="margin-bottom:0.75rem;">The Journal</p>
+        <h2 style="
+          font-family:'Cormorant Garamond',serif;
+          font-size:clamp(2rem,4vw,3rem);
+          font-weight:400;
+          color:var(--cream);
+          line-height:1.15;
+          margin-bottom:1.5rem;
+        ">A tasting note as refined as the dram itself</h2>
+        <p style="color:var(--smoke);line-height:1.75;font-size:1.1rem;font-weight:300;margin-bottom:2rem;">
+          Each entry captures the full sensory picture — nose, palate, and finish logged separately, with structured flavor vocabulary so your notes stay consistent and searchable over time.
+        </p>
+
+        <ul style="list-style:none;padding:0;margin:0 0 2.5rem;display:flex;flex-direction:column;gap:0.75rem;">
+          <li style="display:flex;gap:0.75rem;align-items:flex-start;">
+            <span style="color:var(--dram);font-size:1.2rem;line-height:1.3;">◆</span>
+            <span style="color:var(--smoke);font-size:1.05rem;font-weight:300;line-height:1.5;">Interactive flavor wheel for nose, palate &amp; finish</span>
+          </li>
+          <li style="display:flex;gap:0.75rem;align-items:flex-start;">
+            <span style="color:var(--dram);font-size:1.2rem;line-height:1.3;">◆</span>
+            <span style="color:var(--smoke);font-size:1.05rem;font-weight:300;line-height:1.5;">Separate nose, palate &amp; finish profiles — 1–10 rating scale</span>
+          </li>
+          <li style="display:flex;gap:0.75rem;align-items:flex-start;">
+            <span style="color:var(--dram);font-size:1.2rem;line-height:1.3;">◆</span>
+            <span style="color:var(--smoke);font-size:1.05rem;font-weight:300;line-height:1.5;">Log serving method, date, and tasting setting for every pour</span>
+          </li>
+          <li style="display:flex;gap:0.75rem;align-items:flex-start;">
+            <span style="color:var(--dram);font-size:1.2rem;line-height:1.3;">◆</span>
+            <span style="color:var(--smoke);font-size:1.05rem;font-weight:300;line-height:1.5;">Search previous tastings in a calendar view or by searching and/or sorting by many different data points</span>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ─── SCREENSHOTS ────────────────────────────────── -->
+  <section style="padding:7rem 1.5rem;background:var(--bg-surface);overflow:hidden;">
+    <div class="max-w-6xl mx-auto">
+      <p class="section-label" style="text-align:center;margin-bottom:0.75rem;">Inside the App</p>
+      <h2 style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:clamp(2rem,4vw,3rem);
+        font-weight:400;color:var(--cream);
+        line-height:1.15;text-align:center;margin-bottom:1rem;
+      ">Built for collectors who mean it</h2>
+      <p style="color:var(--smoke);line-height:1.75;font-size:1.1rem;font-weight:300;text-align:center;max-width:560px;margin:0 auto 4.5rem;">
+        Every screen crafted to help you track, discover, and enjoy your collection with clarity.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2.5rem;align-items:start;">
+
+        <!-- Collection -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+          <div style="border-radius:28px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.65),0 0 0 1px rgba(200,120,32,0.18);width:100%;">
+            <img src="brand_assets/Screenshots/0x0ss-4.png" alt="Collection view" style="width:100%;display:block;" />
+          </div>
+          <div style="text-align:center;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Your Collection</p>
+            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">Every bottle catalogued with proof, price, and many other data points.</p>
+          </div>
+        </div>
+
+        <!-- Filter -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+          <div style="border-radius:28px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.65),0 0 0 1px rgba(200,120,32,0.18);width:100%;">
+            <img src="brand_assets/Screenshots/0x0ss.png" alt="Filter options" style="width:100%;display:block;" />
+          </div>
+          <div style="text-align:center;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Powerful Filtering</p>
+            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">Slice your collection by type, proof range, price, and designations like Single Barrel or Bottled in Bond.</p>
+          </div>
+        </div>
+
+        <!-- Statistics -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+          <div style="border-radius:28px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.65),0 0 0 1px rgba(200,120,32,0.18);width:100%;">
+            <img src="brand_assets/Screenshots/screenshot_6_hq_1.png" alt="Statistics" style="width:100%;display:block;" />
+          </div>
+          <div style="text-align:center;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Tasting Statistics</p>
+            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">Track your tasting coverage across every category — see exactly how much of your shelf you've explored.</p>
+          </div>
+        </div>
+
+        <!-- Premium -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
+          <div style="border-radius:28px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.65),0 0 0 1px rgba(200,120,32,0.18);width:100%;">
+            <img src="brand_assets/Screenshots/screenshot_premium_hq.png" alt="Premium unlock" style="width:100%;display:block;" />
+          </div>
+          <div style="text-align:center;">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Unlock Everything</p>
+            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">One-time $7.99 — unlimited collection, tastings, wishlist, analytics, and export. No subscription, ever.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── VIDEOS ─────────────────────────────────── -->
+  <section style="padding:6rem 1.5rem;background:var(--bg-surface);">
+    <div class="max-w-5xl mx-auto">
+      <p class="section-label" style="text-align:center;margin-bottom:0.75rem;">See It In Action</p>
+      <h2 style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:clamp(2rem,4vw,3rem);
+        font-weight:400;
+        color:var(--cream);
+        text-align:center;
+        margin-bottom:3.5rem;
+        line-height:1.15;
+      ">Watch Before You Pour</h2>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
+        <!-- Video 1 -->
+        <div style="
+          background:rgba(20,12,4,0.8);
+          border:1px solid rgba(200,120,32,0.18);
+          border-radius:4px;
+          overflow:hidden;
+        ">
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+            <iframe
+              src="https://www.youtube.com/embed/yY71ND7r3hs"
+              title="BarrelBook in Five Minutes"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+            ></iframe>
+          </div>
+          <div style="padding:1.25rem 1.5rem;">
+            <p style="
+              font-family:'Cormorant Garamond',serif;
+              font-size:1.2rem;font-weight:500;
+              color:var(--cream);margin-bottom:0.25rem;
+            ">BarrelBook in Five Minutes</p>
+            <p style="color:var(--text-faint);font-size:0.9rem;font-weight:300;">The quick tour — from download to your first tasting note.</p>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div style="
+          background:rgba(20,12,4,0.8);
+          border:1px solid rgba(200,120,32,0.18);
+          border-radius:4px;
+          overflow:hidden;
+        ">
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+            <iframe
+              src="https://www.youtube.com/embed/nY9r8XPbino"
+              title="BarrelBook Complete Walkthrough"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+            ></iframe>
+          </div>
+          <div style="padding:1.25rem 1.5rem;">
+            <p style="
+              font-family:'Cormorant Garamond',serif;
+              font-size:1.2rem;font-weight:500;
+              color:var(--cream);margin-bottom:0.25rem;
+            ">Complete Walkthrough</p>
+            <p style="color:var(--text-faint);font-size:0.9rem;font-weight:300;">Every feature, every screen — the full deep-dive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── CTA ─────────────────────────────────────── -->
+  <section style="
+    padding:8rem 1.5rem;
+    background:var(--bg-deep);
+    position:relative;
+    text-align:center;
+    overflow:hidden;
+  ">
+    <div class="glow-amber" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.5;"></div>
+    <div style="position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse at center, transparent 20%, rgba(6,4,2,0.9) 100%);
+    "></div>
+
+    <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;">
+      <img src="brand_assets/barrelbook.png" alt="" style="
+        width:80px;height:80px;object-fit:contain;
+        filter:drop-shadow(0 0 20px rgba(200,120,32,0.5));
+        margin:0 auto 1.75rem;
+        display:block;
+      " />
+      <p class="section-label" style="margin-bottom:0.75rem;">Available on iOS</p>
+      <h2 style="
+        font-family:'Cormorant Garamond',serif;
+        font-size:clamp(2.25rem,5vw,4rem);
+        font-weight:400;
+        color:var(--cream);
+        line-height:1.1;
+        margin-bottom:1.25rem;
+      ">Your finest pours<br />deserve a proper record</h2>
+      <p style="color:var(--smoke);font-size:1.1rem;line-height:1.7;font-weight:300;margin-bottom:2.5rem;">
+        Start free — track up to 10 bottles and log 5 tastings a month. Unlock everything forever for a one-time $7.99. No subscription. No nonsense.
+      </p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:2rem;">
+        <!-- App Store badge -->
+        <a href="#" class="store-badge" style="padding:1rem 2.5rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="#C87820"/>
+          </svg>
+          <div style="text-align:left;">
+            <p style="font-size:0.7rem;color:var(--text-faint);letter-spacing:0.06em;text-transform:uppercase;line-height:1;margin-bottom:3px;">Download on the</p>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--cream);line-height:1;">App Store</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
