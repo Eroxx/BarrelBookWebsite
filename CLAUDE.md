@@ -46,6 +46,9 @@ CLAUDE.md — Frontend Website Rules
 - **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
 - **Depth:** Surfaces should have a layering system (base → elevated → floating), not all sit at the same z-plane.
 
+## Copy & Tone
+- Avoid em dashes where possible. Prefer a period, comma, colon, or rephrased sentence instead. Only use an em dash if it's genuinely the best option and no natural alternative exists.
+
 ## Hard Rules
 - Do not add sections, features, or content not in the reference
 - Do not "improve" a reference design — match it
