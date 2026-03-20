@@ -4,6 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BarrelBook: Know Thy Shelf</title>
+  <meta name="description" content="BarrelBook is the whiskey collection app for serious collectors. Track every bottle, log tastings, manage your wishlist, and know your shelf inside and out. One-time purchase. No subscription." />
+
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://www.barrelbookapp.com/" />
+  <meta property="og:title"       content="BarrelBook: Know Thy Shelf" />
+  <meta property="og:description" content="The whiskey collection app for serious collectors. Track bottles, log tastings, analyze your shelf. One-time $7.99. No subscription." />
+  <meta property="og:image"       content="https://www.barrelbookapp.com/og-image.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="BarrelBook: Know Thy Shelf" />
+  <meta name="twitter:description" content="The whiskey collection app for serious collectors. One-time $7.99. No subscription." />
+  <meta name="twitter:image"       content="https://www.barrelbookapp.com/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon"             type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -183,7 +203,7 @@
       display: inline-block;
       padding: 0.45rem 1.2rem;
       background: rgba(200, 120, 32, 0.9);
-      color: #06040200;
+      
       color: #100C08;
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
@@ -549,7 +569,19 @@
         line-height: 1.6;
       ">For those who like their whiskey neat, and their data even neater.</p>
 
-      <!-- CTAs removed -->
+      <!-- App Store CTA -->
+      <div class="animate-fade-up delay-500" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:0.5rem;">
+        <a href="https://apps.apple.com/us/app/barrelbook/id6751058765"
+           target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2.25rem;background:var(--ember);color:#fff;border-radius:14px;text-decoration:none;font-family:'Crimson Pro',serif;font-size:1.1rem;font-weight:600;letter-spacing:0.02em;transition:opacity 0.2s;"
+           onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" fill="currentColor"/>
+          </svg>
+          Download on the App Store
+        </a>
+      </div>
+      <p class="animate-fade-up delay-600" style="margin-top:1rem;font-size:0.8rem;color:var(--smoke);letter-spacing:0.05em;">One-time $7.99 &nbsp;·&nbsp; No subscription, ever</p>
 
       <!-- Scroll indicator -->
       <div class="animate-fade-in delay-1000 scroll-indicator" style="margin-top:5rem;">
