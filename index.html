@@ -446,13 +446,64 @@
       font-size: 0.95rem;
     }
 
-    /* Mobile nav hide */
+    /* ─── Responsive grid classes ───────── */
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      align-items: start;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-logo {
+      width: 200px;
+      height: 200px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ─── Mobile ─────────────────────────── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-desktop-btns { display: none; }
       .hamburger { display: flex; }
       .stat-item { border-right: none; border-bottom: 1px solid rgba(200, 120, 32, 0.15); padding: 1.5rem 0; }
       .stat-item:last-child { border-bottom: none; }
+
+      /* Grids: stack to 2-col on mobile */
+      .grid-4col { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .grid-3col { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .grid-2col { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      /* Hero logo smaller */
+      .hero-logo { width: 120px; height: 120px; }
+
+      /* Section inner padding */
+      .section-inner { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+
+      /* Reduce large section vertical padding */
+      .section-py { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+
+      /* Screenshot captions smaller */
+      .screenshot-caption-title { font-size: 0.95rem !important; }
+      .screenshot-caption-body { font-size: 0.8rem !important; }
+    }
+
+    @media (max-width: 480px) {
+      /* Very small phones: go single column for 4-col grid */
+      .grid-4col { grid-template-columns: 1fr; }
+      .grid-3col { grid-template-columns: 1fr; }
     }
 
     /* Screenshot lightbox */
@@ -602,7 +653,7 @@
     <div style="position:relative;z-index:2;text-align:center;max-width:800px;">
       <!-- Logo -->
       <div style="margin-bottom:1.75rem;">
-        <img src="brand_assets/Icons/betterglass_nobg.png" alt="BarrelBook" style="width:200px;height:200px;display:block;margin:0 auto;" />
+        <img src="brand_assets/Icons/betterglass_nobg.png" alt="BarrelBook" class="hero-logo" />
       </div>
 
       <!-- Brand name -->
@@ -827,7 +878,7 @@
       </p>
 
       <!-- Row 1: Core screens -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;align-items:start;">
+      <div class="grid-4col">
 
         <!-- Collection -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
@@ -884,7 +935,7 @@
       </div>
 
       <!-- Row 2: Statistics screens -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:start;">
+      <div class="grid-3col">
 
         <!-- Collection Overview -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
@@ -1136,7 +1187,7 @@
         line-height:1.15;
       ">Watch Before You Pour</h2>
 
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;max-width:860px;margin:0 auto;">
+      <div class="grid-2col">
         <!-- Video 1 -->
         <div style="
           background:rgba(20,12,4,0.8);
