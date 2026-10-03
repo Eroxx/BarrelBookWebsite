@@ -604,6 +604,14 @@
       color: var(--text-faint);
       letter-spacing: 0;
     }
+    .ipad-gallery-3 {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .ipad-gallery-3 .ipad-shot-frame { border-radius: 18px; padding: 8px; }
+    .ipad-gallery-3 .ipad-shot-frame img { aspect-ratio: 3 / 4; border-radius: 11px; }
+    .hero-shot { width: min(300px, 72vw); margin: 3.25rem auto 0; }
+    .hero-shot .screenshot-thumb img { width: 100%; display: block; aspect-ratio: 1320/2868; }
     .ipad-feature-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -614,6 +622,7 @@
     @media (max-width: 768px) {
       .ipad-feature-grid { grid-template-columns: 1fr; gap: 1rem; }
       .ipad-gallery-support { grid-template-columns: 1fr; }
+      .ipad-gallery-3 { grid-template-columns: 1fr; max-width: 420px; }
       .ipad-shot-frame { border-radius: 16px; padding: 7px; }
       .ipad-shot-frame img { border-radius: 9px; }
     }
@@ -787,13 +796,11 @@
       </div>
       <p class="animate-fade-up delay-600" style="margin-top:1rem;font-size:0.8rem;color:var(--smoke);letter-spacing:0.05em;">One-time $7.99 &nbsp;·&nbsp; No subscription, ever</p>
 
-      <!-- Scroll indicator -->
-      <div class="animate-fade-in delay-1000 scroll-indicator" style="margin-top:5rem;">
-        <!-- Glencairn glass scroll indicator -->
-        <svg width="26" height="44" viewBox="0 0 22 38" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto;opacity:0.45;">
-          <path d="M8,4 L14,4 C18,4 21,10 20,14 C21,20 14,24 13,24 L16,26 L16,34 L6,34 L6,26 L9,24 C8,24 1,20 2,14 C1,10 4,4 8,4 Z" stroke="#C87820" stroke-width="1.4" stroke-linejoin="round" fill="none"/>
-          <path d="M9,20 Q11,21.5 13,20" stroke="#C87820" stroke-width="1.1" stroke-linecap="round" fill="none"/>
-        </svg>
+      <!-- The app itself -->
+      <div class="hero-shot animate-fade-up delay-700">
+        <div class="screenshot-thumb">
+          <img src="brand_assets/Screenshots/v3/home.jpg" alt="BarrelBook's Home screen: quick actions, collection value, and a bottle spotlight" />
+        </div>
       </div>
     </div>
 
@@ -964,7 +971,7 @@
         <!-- Collection -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/collection_v2.png" alt="Collection view" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/collection.jpg" alt="Collection view" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Your Collection</p>
@@ -975,7 +982,7 @@
         <!-- Tasting -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/tasting_v2.png" alt="Log a tasting" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/tastings.jpg" alt="Log a tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Log Tastings</p>
@@ -986,7 +993,7 @@
         <!-- Wishlist -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/wishlist_v2.png" alt="Wishlist" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/wishlist.jpg" alt="Wishlist" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Your Wishlist</p>
@@ -997,7 +1004,7 @@
         <!-- Flavor Wheel -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/flavor_wheel_v2.png" alt="Flavor wheel tasting" style="width:100%;display:block;aspect-ratio:1320/2748;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/add-tasting.jpg" alt="Flavor wheel tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Map Every Flavor</p>
@@ -1021,7 +1028,7 @@
         <!-- Collection Overview -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/stats_overview_v2.png" alt="Collection overview stats" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-overview.jpg" alt="Collection overview stats" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Collection Overview</p>
@@ -1032,7 +1039,7 @@
         <!-- Tasting Coverage -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/stats_coverage_v2.png" alt="Tasting coverage" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-coverage.jpg" alt="Tasting coverage" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Tasting Coverage</p>
@@ -1043,11 +1050,11 @@
         <!-- Proof & Price -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/stats_graphs_v2.png" alt="Proof and price analysis" style="width:100%;display:block;aspect-ratio:1320/2738;object-fit:cover;object-position:top;" />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-charts.jpg" alt="Proof and price analysis" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Proof & Price Analysis</p>
-            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">Visual breakdowns of your collection's proof range and price distribution. Tap any bar to pull up the bottles that land there.</p>
+            <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.6;">Visual breakdowns of your collection's types, proof range and price distribution. Tap any bar to pull up the bottles that land there.</p>
           </div>
         </div>
 
@@ -1077,44 +1084,24 @@
         Sidebar navigation, list-and-detail columns, and room to see your shelf the way a collector actually works.
       </p>
 
-      <div class="ipad-gallery">
+      <div class="ipad-gallery ipad-gallery-3">
         <div class="ipad-shot-wrap">
           <div class="screenshot-thumb ipad-shot-frame">
-            <img
-              src="brand_assets/Screenshots/ipad/ipad_home.png?v=20260727b"
-              alt="BarrelBook on iPad — landscape Home with sidebar, collection stats, tastings, and wishlist"
-              width="2064"
-              height="1548"
-              style="width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:contain;object-position:center;border-radius:12px;background:#0a0704;"
-            />
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-home.jpg" alt="BarrelBook on iPad: Home with the sidebar, quick stats, recent activity and wishlist" width="1000" height="1333" />
           </div>
-          <p class="ipad-shot-caption">Home<span>Sidebar shell with a collector dashboard</span></p>
+          <p class="ipad-shot-caption">Home<span>Your shelf at a glance</span></p>
         </div>
-        <div class="ipad-gallery-support">
-          <div>
-            <div class="screenshot-thumb ipad-shot-frame">
-              <img
-                src="brand_assets/Screenshots/ipad/ipad_collection.png?v=20260727b"
-                alt="BarrelBook on iPad — Collection list with bottle detail split view"
-                width="2064"
-                height="1548"
-                style="width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:contain;object-position:center;border-radius:9px;background:#0a0704;"
-              />
-            </div>
-            <p class="ipad-shot-caption">Collection<span>List and detail on one canvas</span></p>
+        <div class="ipad-shot-wrap">
+          <div class="screenshot-thumb ipad-shot-frame">
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-collection.jpg" alt="BarrelBook on iPad: the collection as a sortable table" width="1000" height="1333" />
           </div>
-          <div>
-            <div class="screenshot-thumb ipad-shot-frame">
-              <img
-                src="brand_assets/Screenshots/ipad/ipad_statistics.png?v=20260727b"
-                alt="BarrelBook on iPad — Statistics two-column charts and collection breakdown"
-                width="2064"
-                height="1548"
-                style="width:100%;height:auto;display:block;aspect-ratio:4/3;object-fit:contain;object-position:center;border-radius:9px;background:#0a0704;"
-              />
-            </div>
-            <p class="ipad-shot-caption">Statistics<span>Two-column room to analyze</span></p>
+          <p class="ipad-shot-caption">Collection<span>Every column, sortable</span></p>
+        </div>
+        <div class="ipad-shot-wrap">
+          <div class="screenshot-thumb ipad-shot-frame">
+            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-statistics.jpg" alt="BarrelBook on iPad: Statistics in two columns" width="1000" height="1333" />
           </div>
+          <p class="ipad-shot-caption">Statistics<span>Two columns of charts</span></p>
         </div>
       </div>
 
@@ -1127,7 +1114,7 @@
         <div style="background:linear-gradient(145deg,rgba(20,12,6,0.6),rgba(14,8,4,0.7));border:1px solid rgba(200,120,32,0.18);border-radius:4px;padding:1.35rem 1.5rem;position:relative;overflow:hidden;">
           <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,168,48,0.3),transparent);"></div>
           <p style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:0.4rem;">Split detail</p>
-          <p style="color:var(--text-faint);font-size:0.9rem;font-weight:300;line-height:1.55;">Browse your bottles or tastings on the left, open the full record on the right. Built for the larger canvas.</p>
+          <p style="color:var(--text-faint);font-size:0.9rem;font-weight:300;line-height:1.55;">Browse your bottles, wishlist or tastings and open the full record beside the list in landscape, or full screen in portrait.</p>
         </div>
         <div style="background:linear-gradient(145deg,rgba(20,12,6,0.6),rgba(14,8,4,0.7));border:1px solid rgba(200,120,32,0.18);border-radius:4px;padding:1.35rem 1.5rem;position:relative;overflow:hidden;">
           <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,168,48,0.3),transparent);"></div>
@@ -1250,6 +1237,28 @@
             <div>
               <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Infinity Bottle</p>
               <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Blend multiple whiskeys, auto-calculate the combined proof, and log tastings as your blend evolves.</p>
+            </div>
+          </div>
+
+          <!-- Label Scanner (beta) -->
+          <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+            <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/><path d="M8 10h8M8 14h5" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Label Scanner (beta)</p>
+              <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Photograph a bottle's label, or pick a photo, and BarrelBook fills in the name, type, proof and age for you to check.</p>
+            </div>
+          </div>
+
+          <!-- Secondary Market Value -->
+          <div style="display:flex;gap:0.85rem;align-items:flex-start;">
+            <div style="width:36px;height:36px;flex-shrink:0;background:rgba(200,120,32,0.1);border:1px solid rgba(200,120,32,0.2);border-radius:3px;display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 19h16" stroke="#C87820" stroke-width="1.4" stroke-linecap="round"/><path d="M6 16l4-5 3 3 5-7" stroke="#C87820" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--cream);line-height:1.2;margin-bottom:0.2rem;">Secondary Market Value</p>
+              <p style="color:var(--text-faint);font-size:0.875rem;font-weight:300;line-height:1.5;">Track what each bottle would fetch today, and see your shelf's paid and secondary totals side by side.</p>
             </div>
           </div>
 
@@ -1416,7 +1425,7 @@
         ">
           <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
             <iframe
-              src="https://www.youtube.com/embed/yY71ND7r3hs"
+              loading="lazy" src="https://www.youtube-nocookie.com/embed/yY71ND7r3hs"
               title="BarrelBook in Five Minutes"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -1442,7 +1451,7 @@
         ">
           <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
             <iframe
-              src="https://www.youtube.com/embed/nY9r8XPbino"
+              loading="lazy" src="https://www.youtube-nocookie.com/embed/nY9r8XPbino"
               title="BarrelBook Complete Walkthrough"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -1524,11 +1533,12 @@
     <a href="https://discord.gg/nfgGYnGWfA" target="_blank" rel="noopener" style="color:var(--smoke);">Support on Discord</a>
     &nbsp;·&nbsp;
     <a href="mailto:support@barrelbookapp.com" style="color:var(--smoke);">Contact</a>
+    <p style="margin-top:0.9rem;font-size:0.78rem;">© 2026 Chai Wellness</p>
   </footer>
 
 <!-- Lightbox -->
 <div id="lightbox" role="dialog" aria-modal="true">
-  <img id="lightbox-img" src="" alt="" />
+  <img id="lightbox-img" alt="" />
 </div>
 
 <script>
