@@ -618,8 +618,14 @@
     }
     .ipad-gallery-3 .ipad-shot-frame { border-radius: 18px; padding: 8px; }
     .ipad-gallery-3 .ipad-shot-frame img { aspect-ratio: 3 / 4; border-radius: 11px; }
-    .hero-shot { width: min(300px, 72vw); margin: 3.25rem auto 0; }
-    .hero-shot .screenshot-thumb img { width: 100%; display: block; aspect-ratio: 1320/2868; }
+    .hero-shot { position: relative; width: min(880px, 88vw); margin: 3.5rem auto 0; padding-right: 4%; }
+    .hero-shot .ipad-shot-frame img { width: 100%; display: block; aspect-ratio: 4 / 3; }
+    .hero-phone { position: absolute; right: -2%; bottom: -7%; width: 23%; }
+    .hero-phone .screenshot-thumb img { width: 100%; display: block; aspect-ratio: 1320/2868; }
+    @media (max-width: 680px) {
+      .hero-shot { width: 94vw; padding-right: 6%; }
+      .hero-phone { width: 27%; right: -1%; }
+    }
     .ipad-feature-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -806,8 +812,13 @@
 
       <!-- The app itself -->
       <div class="hero-shot animate-fade-up delay-700">
-        <div class="screenshot-thumb">
-          <img src="brand_assets/Screenshots/v3/home.jpg" alt="BarrelBook's Home screen: quick actions, collection value, and a bottle spotlight" />
+        <div class="ipad-shot-frame">
+          <img src="brand_assets/Screenshots/v3/ipad-landscape-home.jpg" alt="BarrelBook on iPad in landscape: Home with quick stats, recent activity, tastings and the wishlist" width="1400" height="1050" />
+        </div>
+        <div class="hero-phone">
+          <div class="screenshot-thumb">
+            <img src="brand_assets/Screenshots/v3/home.jpg" alt="BarrelBook's Home screen on iPhone" />
+          </div>
         </div>
       </div>
     </div>
