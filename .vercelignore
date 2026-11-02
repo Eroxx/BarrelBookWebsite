@@ -2,3 +2,5 @@ CLAUDE.md
 serve.mjs
 stats-mockup.html
 .claude/
+tailwind.config.js
+tailwind.in.css

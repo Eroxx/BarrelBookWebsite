@@ -27,40 +27,10 @@
   <!-- Favicon -->
   <link rel="icon"             type="image/png" href="favicon.png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ember: {
-              50:  '#FDF6E8',
-              100: '#F8E9C6',
-              200: '#F0CD88',
-              300: '#E8A830',
-              400: '#C87820',
-              500: '#A05A10',
-              600: '#7A3E08',
-              700: '#5C2C04',
-              800: '#3D1A04',
-              900: '#1E0D02',
-            },
-          },
-          fontFamily: {
-            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            body:    ['"Crimson Pro"', 'Georgia', 'serif'],
-          },
-          letterSpacing: {
-            'widest2': '0.25em',
-          },
-        },
-      },
-    };
-  </script>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap"></noscript>
 
   <style>
     :root {
@@ -669,6 +639,8 @@
       to   { opacity: 1; transform: scale(1); }
     }
   </style>
+  <!-- tailwind.css is built, not live: after adding or changing Tailwind classes here, run npx tailwindcss@3.4.17 -i tailwind.in.css -o tailwind.css --minify -->
+  <link rel="stylesheet" href="tailwind.css?v=1">
 </head>
 <body>
   <!-- Noise overlay -->
@@ -678,7 +650,7 @@
   <nav>
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3" style="text-decoration:none;">
-        <img src="brand_assets/Icons/betterglass_nobg.png" alt="BarrelBook" class="w-9 h-9 object-contain" />
+        <img data-ext="png" width="1024" height="1024" decoding="async" src="brand_assets/Icons/small/betterglass_nobg-480.webp" srcset="brand_assets/Icons/small/betterglass_nobg-480.webp 480w" sizes="(max-width: 500px) 29vw, (max-width: 1000px) 16vw, 200px" alt="BarrelBook" class="w-9 h-9 object-contain" />
         <span style="
           font-family: 'Cormorant Garamond', serif;
           font-size: 1.15rem;
@@ -735,7 +707,8 @@
 
 
   <!-- ─── HERO ───────────────────────────────────── -->
-  <section style="
+  <main style="display:contents">
+<section style="
     position: relative;
     min-height: 100vh;
     display: flex;
@@ -761,7 +734,7 @@
     <div style="position:relative;z-index:2;text-align:center;max-width:800px;">
       <!-- Logo -->
       <div style="margin-bottom:1.75rem;">
-        <img src="brand_assets/Icons/betterglass_nobg.png" alt="BarrelBook" class="hero-logo" />
+        <img data-ext="png" width="1024" height="1024" decoding="async" src="brand_assets/Icons/small/betterglass_nobg-480.webp" srcset="brand_assets/Icons/small/betterglass_nobg-480.webp 480w" sizes="(max-width: 500px) 29vw, (max-width: 1000px) 16vw, 200px" alt="BarrelBook" class="hero-logo" />
       </div>
 
       <!-- Brand name -->
@@ -816,11 +789,11 @@
       <!-- The app itself -->
       <div class="hero-shot animate-fade-up delay-700">
         <div class="ipad-shot-frame">
-          <img src="brand_assets/Screenshots/v3/ipad-landscape-home.jpg" alt="BarrelBook on iPad in landscape: Home with quick stats, recent activity, tastings and the wishlist" width="1400" height="1050" />
+          <img data-ext="jpg" decoding="async" fetchpriority="high" src="brand_assets/Screenshots/v3/small/ipad-landscape-home-800.webp" srcset="brand_assets/Screenshots/v3/small/ipad-landscape-home-480.webp 480w, brand_assets/Screenshots/v3/small/ipad-landscape-home-800.webp 800w, brand_assets/Screenshots/v3/small/ipad-landscape-home-1200.webp 1200w" sizes="(max-width: 500px) 85vw, (max-width: 1000px) 83vw, 828px" alt="BarrelBook on iPad in landscape: Home with quick stats, recent activity, tastings and the wishlist" width="1400" height="1050" />
         </div>
         <div class="hero-phone">
           <div class="screenshot-thumb">
-            <img src="brand_assets/Screenshots/v3/collection.jpg" alt="BarrelBook's Collection on iPhone: every bottle with its proof and price" />
+            <img data-ext="jpg" width="720" height="1564" decoding="async" src="brand_assets/Screenshots/v3/small/collection-480.webp" srcset="brand_assets/Screenshots/v3/small/collection-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 264px" alt="BarrelBook's Collection on iPhone: every bottle with its proof and price" />
           </div>
         </div>
       </div>
@@ -993,7 +966,7 @@
         <!-- Collection -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/collection.jpg" alt="Collection view" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/collection-480.webp" srcset="brand_assets/Screenshots/v3/small/collection-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 264px" alt="Collection view" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Your Collection</p>
@@ -1004,7 +977,7 @@
         <!-- Tasting -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/tastings.jpg" alt="Log a tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/tastings-480.webp" srcset="brand_assets/Screenshots/v3/small/tastings-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 264px" alt="Log a tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Log Tastings</p>
@@ -1015,7 +988,7 @@
         <!-- Wishlist -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/wishlist.jpg" alt="Wishlist" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/wishlist-480.webp" srcset="brand_assets/Screenshots/v3/small/wishlist-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 264px" alt="Wishlist" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Your Wishlist</p>
@@ -1026,7 +999,7 @@
         <!-- Flavor Wheel -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/add-tasting.jpg" alt="Flavor wheel tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/add-tasting-480.webp" srcset="brand_assets/Screenshots/v3/small/add-tasting-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 264px" alt="Flavor wheel tasting" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Map Every Flavor</p>
@@ -1050,7 +1023,7 @@
         <!-- Collection Overview -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-overview.jpg" alt="Collection overview stats" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/stats-overview-480.webp" srcset="brand_assets/Screenshots/v3/small/stats-overview-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 363px" alt="Collection overview stats" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Collection Overview</p>
@@ -1061,7 +1034,7 @@
         <!-- Tasting Coverage -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-coverage.jpg" alt="Tasting coverage" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/stats-coverage-480.webp" srcset="brand_assets/Screenshots/v3/small/stats-coverage-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 363px" alt="Tasting coverage" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Tasting Coverage</p>
@@ -1072,7 +1045,7 @@
         <!-- Proof & Price -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:1.25rem;">
           <div class="screenshot-thumb">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/stats-charts.jpg" alt="Proof and price analysis" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
+            <img data-ext="jpg" width="720" height="1564" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/stats-charts-480.webp" srcset="brand_assets/Screenshots/v3/small/stats-charts-480.webp 480w" sizes="(max-width: 500px) 88vw, (max-width: 1000px) 46vw, 363px" alt="Proof and price analysis" style="width:100%;display:block;aspect-ratio:1320/2868;object-fit:cover;object-position:top;" />
           </div>
           <div style="text-align:center;">
             <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--cream);margin-bottom:0.35rem;">Proof & Price Analysis</p>
@@ -1108,7 +1081,7 @@
 
       <div class="ipad-shot-wrap" style="margin-bottom:2.25rem;">
         <div class="screenshot-thumb ipad-shot-frame">
-          <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-landscape-wishlist.jpg" alt="BarrelBook on iPad in landscape: the wishlist beside the open bottle's details" width="1400" height="1050" />
+          <img data-ext="jpg" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/ipad-landscape-wishlist-800.webp" srcset="brand_assets/Screenshots/v3/small/ipad-landscape-wishlist-480.webp 480w, brand_assets/Screenshots/v3/small/ipad-landscape-wishlist-800.webp 800w, brand_assets/Screenshots/v3/small/ipad-landscape-wishlist-1200.webp 1200w" sizes="(max-width: 500px) 83vw, (max-width: 1000px) 91vw, 1012px" alt="BarrelBook on iPad in landscape: the wishlist beside the open bottle's details" width="1400" height="1050" />
         </div>
         <p class="ipad-shot-caption">Landscape<span>Your list and the open bottle, side by side</span></p>
       </div>
@@ -1116,19 +1089,19 @@
       <div class="ipad-gallery ipad-gallery-3">
         <div class="ipad-shot-wrap">
           <div class="screenshot-thumb ipad-shot-frame">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-home.jpg" alt="BarrelBook on iPad: Home with the sidebar, quick stats, recent activity and wishlist" width="1000" height="1333" />
+            <img data-ext="jpg" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/ipad-home-800.webp" srcset="brand_assets/Screenshots/v3/small/ipad-home-480.webp 480w, brand_assets/Screenshots/v3/small/ipad-home-800.webp 800w" sizes="(max-width: 500px) 83vw, (max-width: 1000px) 52vw, 307px" alt="BarrelBook on iPad: Home with the sidebar, quick stats, recent activity and wishlist" width="1000" height="1333" />
           </div>
           <p class="ipad-shot-caption">Home<span>Your shelf at a glance</span></p>
         </div>
         <div class="ipad-shot-wrap">
           <div class="screenshot-thumb ipad-shot-frame">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-collection.jpg" alt="BarrelBook on iPad: the collection as a sortable table" width="1000" height="1333" />
+            <img data-ext="jpg" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/ipad-collection-800.webp" srcset="brand_assets/Screenshots/v3/small/ipad-collection-480.webp 480w, brand_assets/Screenshots/v3/small/ipad-collection-800.webp 800w" sizes="(max-width: 500px) 83vw, (max-width: 1000px) 52vw, 307px" alt="BarrelBook on iPad: the collection as a sortable table" width="1000" height="1333" />
           </div>
           <p class="ipad-shot-caption">Collection<span>Every column, sortable</span></p>
         </div>
         <div class="ipad-shot-wrap">
           <div class="screenshot-thumb ipad-shot-frame">
-            <img loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/ipad-statistics.jpg" alt="BarrelBook on iPad: Statistics in two columns" width="1000" height="1333" />
+            <img data-ext="jpg" loading="lazy" decoding="async" src="brand_assets/Screenshots/v3/small/ipad-statistics-800.webp" srcset="brand_assets/Screenshots/v3/small/ipad-statistics-480.webp 480w, brand_assets/Screenshots/v3/small/ipad-statistics-800.webp 800w" sizes="(max-width: 500px) 83vw, (max-width: 1000px) 52vw, 307px" alt="BarrelBook on iPad: Statistics in two columns" width="1000" height="1333" />
           </div>
           <p class="ipad-shot-caption">Statistics<span>Two columns of charts</span></p>
         </div>
@@ -1523,7 +1496,7 @@
     "></div>
 
     <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;">
-      <img src="brand_assets/Icons/betterglass_nobg.png" alt="" style="
+      <img data-ext="png" width="1024" height="1024" decoding="async" src="brand_assets/Icons/small/betterglass_nobg-480.webp" srcset="brand_assets/Icons/small/betterglass_nobg-480.webp 480w" sizes="(max-width: 500px) 29vw, (max-width: 1000px) 16vw, 200px" alt="" style="
         width:80px;height:80px;object-fit:contain;
         margin:0 auto 1.75rem;
         display:block;
@@ -1555,6 +1528,7 @@
       </div>
     </div>
   </section>
+</main>
 
   <footer style="text-align:center;padding:2rem 1rem 3rem;color:var(--text-faint);font-size:0.85rem;">
     <a href="https://eroxx.github.io/BarrelBookPrivacyPolicy/" style="color:var(--smoke);">Privacy Policy</a>
@@ -1597,7 +1571,7 @@
   document.querySelectorAll('.screenshot-thumb').forEach(thumb => {
     thumb.addEventListener('click', () => {
       const img = thumb.querySelector('img');
-      lbImg.src = img.src;
+      lbImg.src = (img.currentSrc || img.src).replace(/small\/(.+)-\d+\.webp(\?.*)?$/, "$1." + (img.dataset.ext || "webp"));
       lbImg.alt = img.alt;
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
